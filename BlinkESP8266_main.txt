@@ -1,0 +1,66 @@
+#include <Arduino.h>
+
+#define ONBOARD_LED  2
+#define LED_ON LOW //LED is on when pin 2 output is low
+#define LED_OFF HIGH //LED is off when pin 2 is high
+
+void showLED(int pin, int LEDDelay, char LEDStatus)
+{
+  if (LEDStatus==LED_ON)
+  {
+    Serial.println("The blue LED is on");
+    digitalWrite(pin, LED_ON);
+  }
+  else
+  {
+    Serial.println("The blue LED is off");
+    digitalWrite(pin, LED_OFF);
+  }
+delay(LEDDelay);
+}
+
+void setup() 
+{
+  // put your setup code here, to run once:
+ Serial.begin(115200);
+ pinMode(ONBOARD_LED,OUTPUT); //Setting pin 2 to be an output rather than an input signal
+ digitalWrite(ONBOARD_LED,LED_OFF); //Turn off the LED after power on or reset
+}
+
+void loop() 
+{
+  // put your main code here, to run repeatedly:
+  
+  delay(1500); // Delay 1500ms before starting the Morse Code message, so the delay from a reset until the LED message starts isn't too long
+  
+  // ########## Display Morse Code "S" with three short blinks of the LED ##########
+  showLED(ONBOARD_LED, 200, LED_ON);
+  showLED(ONBOARD_LED, 200, LED_OFF);
+  showLED(ONBOARD_LED, 200, LED_ON);
+  showLED(ONBOARD_LED, 200, LED_OFF);
+  showLED(ONBOARD_LED, 200, LED_ON);
+  showLED(ONBOARD_LED, 200, LED_OFF);
+  
+  delay(900); // Make the total delay between the "S" and the "O" be 1100ms (200 from the last LED_OFF instruction plus this 900ms)
+  
+  // ########## Display Morse Code "O" with three long blinks of the LED ##########
+  showLED(ONBOARD_LED, 800, LED_ON);
+  showLED(ONBOARD_LED, 400, LED_OFF);
+  showLED(ONBOARD_LED, 800, LED_ON);
+  showLED(ONBOARD_LED, 400, LED_OFF);
+  showLED(ONBOARD_LED, 800, LED_ON);
+  showLED(ONBOARD_LED, 400, LED_OFF);
+  
+  delay(700); // Make the total delay between the "O" and the "S" be 1100ms (400 from the last LED_OFF instruction plus this 700ms)
+  
+   // ########## Display Morse Code "S" with three short blinks of the LED ##########
+  showLED(ONBOARD_LED, 200, LED_ON);
+  showLED(ONBOARD_LED, 200, LED_OFF);
+  showLED(ONBOARD_LED, 200, LED_ON);
+  showLED(ONBOARD_LED, 200, LED_OFF);
+  showLED(ONBOARD_LED, 200, LED_ON);
+  showLED(ONBOARD_LED, 200, LED_OFF);
+  
+  delay(1500); // Delay 1.5 second at the end of the message, this keeps the total delay from message end to begin again at 3 seconds
+  // but limits the delay from reset until message starts to 1.5 seconds
+}
